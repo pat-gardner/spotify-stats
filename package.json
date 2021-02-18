@@ -1,0 +1,36 @@
+{
+  "name": "spotify-stats",
+  "description": "A simple web app for viewing information about your Spotify habits",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "sapper dev --port=8000",
+    "build": "sapper build",
+    "export": "sapper export",
+    "start": "node __sapper__/build",
+    "validate": "svelte-check --ignore src/node_modules/@sapper"
+  },
+  "dependencies": {
+    "@polka/redirect": "^1.0.0-next.0",
+    "compression": "^1.7.1",
+    "crypto-random-string": "^3.3.1",
+    "dotenv-safe": "^8.2.0",
+    "express-session": "^1.17.1",
+    "polka": "next",
+    "session-file-store": "^1.5.0",
+    "sirv": "^1.0.0",
+    "spotify-web-api-node": "^5.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.20.0",
+    "file-loader": "^6.0.0",
+    "sapper": "^0.28.0",
+    "svelte": "^3.17.3",
+    "svelte-check": "^1.0.46",
+    "svelte-loader": "^2.9.0",
+    "svelte-preprocess": "^4.3.0",
+    "webpack": "^4.7.0",
+    "webpack-modules": "^1.0.0"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/pat-gardner/spotify-stats"
+}

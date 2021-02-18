@@ -1,0 +1,16 @@
+# Sapper defaults
+.DS_Store
+/node_modules/
+/src/node_modules/@sapper/
+yarn-error.log
+/__sapper__/
+
+# Environment files and secrets
+.env
+
+# Session file store
+sessions/
+
+# Vscode stuff
+.vscode
+*.code-workspace
