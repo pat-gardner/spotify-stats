@@ -1,6 +1,17 @@
 <script context="module">
 	export async function preload(page, { authenticated }) {
 		if(!authenticated) return
+
+		const res = await this.fetch('/spotify/currentlyPlaying')
+		if (!res.ok) return
+
+		const item = await res.json()
+		if (!item) return
+		
+		return {
+			track: item.name,
+			artist: item.artists && item.artists[0].name
+		}
 	}
 </script>
 
@@ -26,7 +37,8 @@
 	import { stores } from '@sapper/app'
 	const { session } = stores()
 
-	export let currentlyPlaying = 'something unknown'
+	export let track
+	export let artist
 </script>
 
 <svelte:head>
@@ -36,7 +48,9 @@
 <h1>Hello!</h1>
 
 {#if $session.authenticated}
-	<p>Welcome back! You are playing {currentlyPlaying}</p>
+	<p>Welcome back! {track ? 
+		`You are playing ${track}${artist ? ` by ${artist}` : ''}!`
+		: "You aren't playing anything"}</p>
 {:else}
 	<p>Please <a href="/auth/login">log in</a></p>
 {/if}
