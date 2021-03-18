@@ -23,6 +23,16 @@ polka()
 		},
 		store: new FileStore()
 	}))
+	// Ensure that the user is authorized for all paths where they need access
+	// to the Spotify API
+	.use('/spotify', function (req, res, next) {
+		if (!req.session.spotify) {
+			res.statusCode = 401
+			res.end('Please log in first')
+			return
+		}
+		next()
+	})
 	.use(
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),

@@ -1,10 +1,10 @@
 import { spotifyFactory } from 'spotify-utils'
 
+/**
+ * Get the track the user is currently playing
+ * @returns track metadata about the current song
+ */
 export async function get(req, res) {
-    if (!req.session.spotify) {
-        req.statusCode = 401
-        req.end('Please log in first')
-    }
     const spotify = await spotifyFactory(req.session.spotify)
 
     const data = await spotify.getMyCurrentPlayingTrack()
