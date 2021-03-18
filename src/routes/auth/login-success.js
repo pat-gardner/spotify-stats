@@ -7,6 +7,7 @@ export async function get(req, res) {
         res.statusCode = 401
         res.end()
     }
+    req.session.state = undefined
 
     const spotify = simpleSpotifyFactory()
 
@@ -18,7 +19,7 @@ export async function get(req, res) {
     req.session.spotify = {
         accessToken: data.body['access_token'],
         refreshToken: data.body['refresh_token'],
-        expires
+        expires: expires.getTime()
     }
 
     res.writeHead(302, { Location: '/' })

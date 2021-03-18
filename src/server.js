@@ -29,7 +29,7 @@ polka()
 		sapper.middleware({
 			session: req => {
 				return {
-					authenticated: req.session && req.session.spotify
+					spotify: req.session && req.session.spotify
 				}
 			}
 		})

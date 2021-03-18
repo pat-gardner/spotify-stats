@@ -1,6 +1,6 @@
 <script context="module">
-	export async function preload(page, { authenticated }) {
-		if(!authenticated) return
+	export async function preload(page, { spotify }) {
+		if(!spotify) return
 
 		const res = await this.fetch('/spotify/currentlyPlaying')
 		if (!res.ok) return
@@ -47,7 +47,7 @@
 
 <h1>Hello!</h1>
 
-{#if $session.authenticated}
+{#if $session.spotify}
 	<p>Welcome back! {track ? 
 		`You are playing ${track}${artist ? ` by ${artist}` : ''}!`
 		: "You aren't playing anything"}</p>
