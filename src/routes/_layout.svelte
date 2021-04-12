@@ -21,8 +21,9 @@
 </style>
 
 <nav>
-    <a class="home" href='/'>Home</a>
+    <a href='/'>Home</a>
     {#if spotify}
+        <a href='view/playlists'>Playlists</a>
         <a class="login" href='/auth/logout'>Log out</a>
     {:else}
         <a class="login" href="/auth/login">Log in</a>

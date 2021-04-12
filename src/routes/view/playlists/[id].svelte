@@ -1,0 +1,35 @@
+<script context='module'>
+    // Get the tracks in a playlist and show some stats
+    export async function preload({ params: { id } }, { spotify }) {
+        if (!spotify) {
+            return this.redirect(302, '/')
+        }
+
+        const res = await this.fetch(`/spotify/playlists/${id}`)
+        if (!res) return
+
+        const { name, tracks} = await res.json()
+        if (!name || !tracks) return
+
+        return { name, tracks }
+    }
+</script>
+
+<script>
+    export let name
+    export let tracks
+
+    const avgPop = tracks.reduce((total, next) => total + next.popularity, 0) / tracks.length
+</script>
+
+<style>
+    h2, p {
+        text-align: center;
+    }
+</style>
+<svelte:head>
+    <title>{name} | Spotify Stats</title>
+</svelte:head>
+
+<h2>Some stats about {name}</h2>
+<p>The average popularity is {avgPop.toFixed(0)} out of 100</p>
