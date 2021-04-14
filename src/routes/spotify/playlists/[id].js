@@ -2,35 +2,41 @@ import { spotifyFactory } from 'spotify-utils'
 
 /**
  * Get a list of the tracks in playlist by playlist ID
- * @returns an array of tracks
+ * @returns the name of the playlist and an array of tracks
  */
 export async function get(req, res) {
     const spotify = await spotifyFactory(req.session.spotify)
 
     const playlistId = req.params.id
 
-    // TODO: real field limits, paging
-    const data = await spotify.getPlaylist(playlistId)
-    // const data = await spotify.getPlaylist(playlistId, {
-    //     fields: 'tracks.items(added_at,track(duration_ms,id,name))'
-    // })
-    const name = data.body.name
-    const tracks = data.body.tracks.items.map(({
+    // TODO: paging
+    const playlist = await spotify.getPlaylist(playlistId, {
+        fields: 'name,tracks.items(added_at,track(artists(name),duration_ms,id,name,popularity))'
+    })
+
+    const ids = playlist.body.tracks.items.map(item => item.track.id)
+    const features = await spotify.getAudioFeaturesForTracks(ids)
+    // The audio features are returned in order requested so zip them
+    // together with the matching tracks
+    const tracks = playlist.body.tracks.items.map(({
         added_at, 
-        track: { 
+        track: {
+            artists,
             duration_ms,
-            id,
             name,
             popularity
-        }}) => {
+        }}, i) => {
         return {
             added_at,
+            artists,
             duration_ms,
-            id,
+            features: features.body.audio_features[i],
             name,
             popularity
         }
     })
+
+    const name = playlist.body.name
 
     res.end(JSON.stringify({ name, tracks} ))
 }

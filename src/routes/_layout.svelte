@@ -9,6 +9,9 @@
 </script>
 
 <style>
+    .main {
+        text-align: center;
+    }
     nav {
         height: 3rem;
         line-height: 3rem;
@@ -29,5 +32,6 @@
         <a class="login" href="/auth/login">Log in</a>
     {/if}
 </nav>
-
-<slot></slot>
+<div class='main'>
+    <slot></slot>
+</div>

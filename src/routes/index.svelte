@@ -17,7 +17,6 @@
 
 <style>
 	h1, p {
-		text-align: center;
 		margin: 0 auto;
 	}
 
